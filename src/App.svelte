@@ -18,7 +18,7 @@
 
 <Header />
 <main>
-  <h1>Hello!</h1>
+  <h1>Your lists</h1>
 
   <RecentComments
     commentsTitle={"A list of most recent comments: "}

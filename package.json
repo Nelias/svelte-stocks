@@ -4,10 +4,12 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public"
+    "start": "sirv public",
+    "start:dev": "sirv public --single --dev --port 5001"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "rollup": "^2.60.0",
     "rollup-plugin-livereload": "^2.0.5",

@@ -1,38 +1,40 @@
-<script>
-  // import { recurrent } from "brain.js/dist/src";
+<script src="/src/worker.js" type="module">
+  import { onMount } from "svelte";
+  import brain from "brain.js";
+  import * as model from "../models/brainjs-rate-comment-model.json";
+ 
   export let commentsTitle;
   export let commentsList;
 
-  // let network;
-
-  // console.log(recurrent);
-
-  // network.train([
-  //   { input: "rising", output: "positive" },
-  //   { input: "bored", output: "negative" },
-  //   { input: ":) ;) :D", output: "positive" },
-  //   { input: "we can't have nice things", output: "negative" },
-  //   { input: "tempted", output: "negative" },
-  //   { input: "happy", output: "positive" },
-  //   { input: "good", output: "positive" },
-  //   { input: "congratulations", output: "positive" },
-  //   { input: "sucks", output: "negative" },
-  //   { input: "bad", output: "negative" },
-  // ]);
-
-  // console.log(network.run("this is good"));
+  const network = new brain.recurrent.LSTM();
+  network.fromJSON(model);
 </script>
 
+<div class="comments-wrapper">
 <h3>{commentsTitle}</h3>
 <div>
   {#if commentsList}
-    {@html JSON.parse(JSON.stringify(commentsList)).comments.map(
-      (comment) =>
-        comment.content +
-        ` This comment is: ${
-          "LSTM"
-          // network.run(comment.content)
-        }`
-    )}
+    <ul>
+    {#each commentsList.comments as comment}
+      <li>
+        {@html comment.content}
+        -----> BrainJS thinks this comment is: {network.run(comment.content) || "???"}
+      </li>
+    {/each}
+
+    </ul>
   {/if}
 </div>
+</div>
+
+
+<style>
+  .comments-wrapper {
+    text-align: left;
+    padding: 40px;
+  }
+
+  li {
+    padding: 8px 4px;
+  }
+</style>
